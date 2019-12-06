@@ -1,0 +1,38 @@
+ul{
+    list-style-type: none;
+}
+
+li{
+    padding: .2rem;
+}
+
+q{
+    color: darkgreen;
+}
+
+.card-main{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3fr 1fr 1fr;
+    padding: 1rem;
+    justify-items: center;
+    border-radius: 1rem 1rem .5rem .2rem;
+    background-color: whitesmoke;
+    box-shadow: .0 .2rem .5rem lightsteelblue;
+}
+
+.card-main-img{
+    grid-row: 1/3;
+    border-radius: 50%;
+    border: 0.5rem outset lavender;
+}
+
+.card-main-title{
+    grid-row: 3/4;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.card-main-desc{
+    grid-row: 4/5;
+}
