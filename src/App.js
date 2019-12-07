@@ -1,16 +1,30 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 import CardList from "./components/cardlist/CardList";
 import SearchBox from "./components/search/Search";
 import ErrorBoundry from "./components/error-boundry/ErrorBoundry";
 import "./App.css";
 
+import {searchTermChanged} from './actions/actions'
+
+const mapStateToProps = state => {
+  return {
+    search: {
+      term: state.search.term
+    }
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return{
+    searchTermChanged: (event) => dispatch(searchTermChanged(event.target.value))
+  }
+}
+
 class App extends Component {
   state = {
-    users: [],
-    search: {
-      term: ""
-    }
+    users: []
   };
 
   componentDidMount() {
@@ -20,26 +34,16 @@ class App extends Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      nextState.search.term.length !== this.state.search.term.length ||
-      nextState.users.length !== this.state.users.length
-    );
-  }
-
-  searchTermChanged = event => {
-    this.setState({ search: { term: event.target.value } });
-  };
-
   render() {
+    const {search, searchTermChanged} = this.props;
     let users = this.state.users.filter(user => {
-      return user.name.toLowerCase().includes(this.state.search.term);
+      return user.name.toLowerCase().includes(search.term);
     });
 
     return (
       <React.Fragment>
         <ErrorBoundry>
-          <SearchBox changed={this.searchTermChanged} />
+          <SearchBox changed={searchTermChanged} />
           <main className="app-main">
             <CardList users={users} />
           </main>
@@ -49,4 +53,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

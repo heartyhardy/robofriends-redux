@@ -1,0 +1,1 @@
+export const CHANGE_SEARCH_TEXT = Symbol("Search param text")
