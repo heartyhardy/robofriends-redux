@@ -12,7 +12,7 @@ export const searchRobots = (state = initialState, action = {}) => {
       return {
         ...state,
         search: {
-          term: ""
+          term: action.payload
         }
       };
     default:
