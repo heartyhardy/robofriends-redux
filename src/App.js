@@ -8,7 +8,13 @@ import "./App.css";
 
 import {searchTermChanged} from './actions/actions'
 
-const mapStateToProps = 
+const mapStateToProps = state => ({
+  state:{
+    term: state.term
+  }
+})
+
+const mapDispatchToProps = event => 
 
 class App extends Component {
   state = {
