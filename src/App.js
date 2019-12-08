@@ -8,15 +8,19 @@ import "./App.css";
 
 import {searchTermChanged} from './actions/actions'
 
-const mapStateToProps = state => ({
-  search:{
-    term: state.search.term
+const mapStateToProps = state => {
+  return {
+    search:{
+      term: state.search.term
+    }
   }
-})
+}
 
-const mapDispatchToProps = dispatch => ({
-  searchTermChanged: (event) => dispatch(searchTermChanged(event.target.value))
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    searchTermChanged: (event) => dispatch(searchTermChanged(event.target.value))
+  }
+}
 
 class App extends Component {
   state = {
