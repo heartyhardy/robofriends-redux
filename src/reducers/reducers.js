@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const searchRobots = (state = initialState, action = {}) => {
-  switch (action) {
+  switch (action.type) {
     case CHANGE_SEARCH_TERM:
       return {
         ...state,
@@ -15,5 +15,7 @@ export const searchRobots = (state = initialState, action = {}) => {
           term: ""
         }
       };
+    default:
+      return initialState;
   }
 };

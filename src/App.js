@@ -9,19 +9,18 @@ import "./App.css";
 import {searchTermChanged} from './actions/actions'
 
 const mapStateToProps = state => ({
-  state:{
-    term: state.term
+  search:{
+    term: state.search.term
   }
 })
 
-const mapDispatchToProps = event => 
+const mapDispatchToProps = dispatch => ({
+  searchTermChanged: (event) => dispatch(searchTermChanged(event.target.value))
+})
 
 class App extends Component {
   state = {
-    users: [],
-    search: {
-      term: ""
-    }
+    users: []
   };
 
   componentDidMount() {
@@ -31,26 +30,16 @@ class App extends Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      nextState.search.term.length !== this.state.search.term.length ||
-      nextState.users.length !== this.state.users.length
-    );
-  }
-
-  searchTermChanged = event => {
-    this.setState({ search: { term: event.target.value } });
-  };
-
   render() {
+    const {search, searchTermChanged} = this.props
     let users = this.state.users.filter(user => {
-      return user.name.toLowerCase().includes(this.state.search.term);
+      return user.name.toLowerCase().includes(search.term);
     });
 
     return (
       <React.Fragment>
         <ErrorBoundry>
-          <SearchBox changed={this.searchTermChanged} />
+          <SearchBox changed={searchTermChanged} />
           <main className="app-main">
             <CardList users={users} />
           </main>
