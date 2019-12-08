@@ -1,42 +1,41 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import CardList from "./components/cardlist/CardList";
 import SearchBox from "./components/search/Search";
 import ErrorBoundry from "./components/error-boundry/ErrorBoundry";
 import "./App.css";
 
-import {searchTermChanged} from './actions/actions'
+import {searchTermChanged, robotsRequested} from './actions/actions'
 
 const mapStateToProps = state => {
+  console.log("State", state)
   return {
+    isPending: state.requestRobots.isPending,
+    robots: state.requestRobots.robots,
+    error: state.requestRobots.error,
     search: {
-      term: state.search.term
+      term: state.searchRobots.search.term
     }
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return{
-    searchTermChanged: (event) => dispatch(searchTermChanged(event.target.value))
+    searchTermChanged: (event) => dispatch(searchTermChanged(event.target.value)),
+    onRequestRobots: () => dispatch(robotsRequested()) // Same as using dispatch(requestRobots)
   }
 }
 
 class App extends Component {
-  state = {
-    users: []
-  };
 
   componentDidMount() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
-      const users = res.data;
-      this.setState({ users });
-    });
+    this.props.onRequestRobots()
   }
 
   render() {
-    const {search, searchTermChanged} = this.props;
-    let users = this.state.users.filter(user => {
+    const {search, searchTermChanged, robots} = this.props;
+    console.log(this.props)
+    let users = robots.filter(user => {
       return user.name.toLowerCase().includes(search.term);
     });
 
