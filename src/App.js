@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 import CardList from "./components/cardlist/CardList";
 import SearchBox from "./components/search/Search";
 import ErrorBoundry from "./components/error-boundry/ErrorBoundry";
 import "./App.css";
+
+import {searchTermChanged} from './actions/actions'
+
+const mapStateToProps = 
 
 class App extends Component {
   state = {
@@ -49,4 +54,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
